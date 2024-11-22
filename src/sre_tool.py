@@ -14,7 +14,7 @@ def fetch_servers():
 def fetch_service_data(ip_address):
     response=requests.get(f"{URL}/{ip_address}")
     response=response.json()
-    #print(response)
+    print(response)
     return response
 
 
