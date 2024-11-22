@@ -9,7 +9,7 @@ import socket
 from typing import Dict
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-NUM_SERVERS = 150
+NUM_SERVERS = 25
 SERVER_SET = set(['10.58.1.%d' % i for i in range(1, NUM_SERVERS + 1)])
 IP_REGEX = r'/10\.58\.1\.[0-9]{1,3}$'
 SERVICES = [

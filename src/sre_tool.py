@@ -7,7 +7,7 @@ URL="http://localhost:5000"
 def fetch_servers():
     response=requests.get(f"{URL}/servers")
     response=response.json()
-    print(response)
+    #print(response)
     return response
 
 
@@ -39,12 +39,57 @@ def average_usage():
     server_list=fetch_servers()
 
 
+def check_health():
+    pass
+
+
+def track_service(service_name):
+    try:
+        lst=[]
+        while True:
+            servers=fetch_servers()
+            instance_count=0
+           
+            for ip in servers:
+                data=fetch_service_data(ip)
+                if (data['service']==service_name):
+                    health="Healthy"
+                    instance_count=instance_count+1
+                    if(int(data['cpu'].strip('%'))>80 or int(data['memory'].strip('%'))>80):
+                        health='Unhealthy'
+                    print(f"IP={ip:<15} CPU={data['cpu']:<10} Memory={data['memory']:<10} {health:<10}")        
+            print(f"Total instances running:{instance_count}")
+            time.sleep(5)
+    except KeyboardInterrupt:
+        print(f"Average CPU Usage:{sum(lst)/len(lst)}")
+        print("\nStopped tracking service.")        
+
 
 def main():
     
-    #fetch_servers()    
-    fetch_service_data("10.58.1.6")
-    display_services()
+   while True:
+        print("\nChoose an action:")
+        print("1. List all running services")
+        print("2. Calculate average CPU/Memory usage by service")
+        print("3. Check health of services")
+        print("4. Track a specific service")
+        print("5. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            display_services()
+        elif choice == "2":    
+            average_usage()
+        elif choice == "3":
+            check_health()
+        elif choice == "4":
+            service_name = input("Enter the service name to track: ")
+            track_service(service_name)
+        elif choice == "5":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
     main()
