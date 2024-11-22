@@ -41,7 +41,7 @@ def average_usage():
 
 
 def main():
-    """Main function to display services."""
+    
     #fetch_servers()    
     fetch_service_data("10.58.1.6")
     display_services()
