@@ -35,6 +35,9 @@ def display_services():
         
         print(f"{ip:<20} {data['service']:<20} {health:<10} {data['cpu']:<10} {data['memory']:<10}")
     print(servicetracker)
+def average_usage():
+    server_list=fetch_servers()
+
 
 
 def main():
