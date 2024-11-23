@@ -37,7 +37,7 @@ def display_services():
             health='Unhealthy'
         
         print(f"{ip:<20} {data['service']:<20} {health:<10} {data['cpu']:<10} {data['memory']:<10}")
-    print(servicetracker)
+    
 
 
 def average_usage():
@@ -80,14 +80,15 @@ def check_health():
             health_data[service_name]=0
         if cpu<80 and memory<80:
             health_data[service_name]=health_data[service_name]+1
-    print(health_data)          
+          
     for service,count in health_data.items():
+        
             
         if count<2:
             unhealthy_service_flag=1
             print(f"WARNING: {service} has fewer than 2 healthy instances!")      
-        if unhealthy_service_flag==0:
-            print("\nNo Unhealthy Service found!")
+    if unhealthy_service_flag==0:
+        print("\nNo Unhealthy Service found!")
 
 
 def track_service(service_name):
