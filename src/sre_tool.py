@@ -5,20 +5,23 @@ URL="http://localhost:5000"
 
 
 def fetch_servers():
+    """Gets the list of ip addresses from the server"""
     response=requests.get(f"{URL}/servers")
     response=response.json()
-    #print(response)
+    
     return response
 
 
 def fetch_service_data(ip_address):
+    """Gets data for a specific ip """
     response=requests.get(f"{URL}/{ip_address}")
     response=response.json()
-    #print(response)
+    
     return response
 
 
 def display_services():
+    """Lists all running services"""
     server_list=fetch_servers()
     servicetracker={}
     print(f"{'IP Address':<20} {'Service':<20} {'Status':<10} {'CPU':<10} {'Memory':<10}")
@@ -38,6 +41,7 @@ def display_services():
 
 
 def average_usage():
+    """Computes the average cpu and memory usage by service"""
     server_list=fetch_servers()
     usage_data={}
     for ip in server_list:
@@ -61,6 +65,7 @@ def average_usage():
 
 
 def check_health():
+    """Checks if a service has less than 2 instances healthy"""
     server_list=fetch_servers()
     health_data={}
     unhealthy_service_flag=0
@@ -74,7 +79,8 @@ def check_health():
         if service_name not in health_data:
             health_data[service_name]=0
         if cpu<80 and memory<80:
-            health_data[service_name]=health_data[service_name]+1  
+            health_data[service_name]=health_data[service_name]+1
+    print(health_data)          
     for service,count in health_data.items():
             
         if count<2:
@@ -85,6 +91,7 @@ def check_health():
 
 
 def track_service(service_name):
+    """Tracks a specific service over time"""
     try:
         
         while True:
