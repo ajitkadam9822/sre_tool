@@ -53,7 +53,9 @@ def average_usage():
     for service,data in usage_data.items():
         avg_cpu=sum(data["cpu"])/len(data["cpu"])
         avg_memory=sum(data["memory"])/len(data["memory"])
-        print(f"Service={service:<15} CPU={data['cpu']:<10} Memory={data['memory']:<10}")   
+        avg_cpu=round(avg_cpu,2)
+        avg_memory=round(avg_memory,2)
+        print(f"{service:<20} Average CPU={avg_cpu:<10} Average Memory={avg_memory:<10}")   
          
 
     #print(usage_data)    
