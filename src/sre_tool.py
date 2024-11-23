@@ -63,23 +63,27 @@ def average_usage():
 def check_health():
     server_list=fetch_servers()
     health_data={}
-    
+    unhealthy_service_flag=0
+
     for ip in server_list:
         data=fetch_service_data(ip)
         service_name=data["service"]
+        
         cpu=int(data["cpu"].strip('%'))
         memory=int(data["memory"].strip('%'))
         if service_name not in health_data:
             health_data[service_name]=0
         if cpu<80 and memory<80:
             health_data[service_name]=health_data[service_name]+1  
-        for service,count in health_data.items():
-            unhealthy_service_flag=0
-            if count<2:
-                unhealthy_service_flag=1
-                print(f"WARNING: {service} has fewer than 2 healthy instances!")      
-            if unhealthy_service_flag==0:
-                 print("\nNo Unhealthy Service found!")
+    for service,count in health_data.items():
+            
+        if count<2:
+            unhealthy_service_flag=1
+            print(f"WARNING: {service} has fewer than 2 healthy instances!")      
+        if unhealthy_service_flag==0:
+            print("\nNo Unhealthy Service found!")
+
+
 def track_service(service_name):
     try:
         
