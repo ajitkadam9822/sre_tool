@@ -55,10 +55,9 @@ def average_usage():
         avg_memory=sum(data["memory"])/len(data["memory"])
         avg_cpu=round(avg_cpu,2)
         avg_memory=round(avg_memory,2)
-        print(f"{service:<20} Average CPU={avg_cpu:<10} Average Memory={avg_memory:<10}")   
+        print(f"{service:<20} Average CPU={avg_cpu:}% {'  '}Average Memory={avg_memory:}%")   
          
 
-    #print(usage_data)    
 
 
 def check_health():
