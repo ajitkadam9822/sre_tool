@@ -14,7 +14,7 @@ def fetch_servers():
 def fetch_service_data(ip_address):
     response=requests.get(f"{URL}/{ip_address}")
     response=response.json()
-    print(response)
+    #print(response)
     return response
 
 
@@ -35,8 +35,22 @@ def display_services():
         
         print(f"{ip:<20} {data['service']:<20} {health:<10} {data['cpu']:<10} {data['memory']:<10}")
     print(servicetracker)
+
+
 def average_usage():
     server_list=fetch_servers()
+    usage_data={}
+    for ip in server_list:
+        data=fetch_service_data(ip)
+        service_name=data["service"]
+        cpu=int(data["cpu"].strip('%'))
+        memory=int(data["memory"].strip('%'))
+        if(service_name not in usage_data):
+            usage_data[service_name]={"cpu": [], "memory": []}
+        usage_data[service_name]['cpu'].append(cpu)
+        usage_data[service_name]['memory'].append(memory)    
+
+    print(usage_data)    
 
 
 def check_health():
@@ -45,7 +59,7 @@ def check_health():
 
 def track_service(service_name):
     try:
-        lst=[]
+        
         while True:
             servers=fetch_servers()
             instance_count=0
@@ -61,7 +75,7 @@ def track_service(service_name):
             print(f"Total instances running:{instance_count}")
             time.sleep(5)
     except KeyboardInterrupt:
-        print(f"Average CPU Usage:{sum(lst)/len(lst)}")
+        
         print("\nStopped tracking service.")        
 
 
@@ -76,16 +90,16 @@ def main():
         print("5. Exit")
         choice = input("Enter your choice: ")
 
-        if choice == "1":
+        if choice=="1":
             display_services()
-        elif choice == "2":    
+        elif choice=="2":    
             average_usage()
-        elif choice == "3":
+        elif choice=="3":
             check_health()
-        elif choice == "4":
+        elif choice=="4":
             service_name = input("Enter the service name to track: ")
             track_service(service_name)
-        elif choice == "5":
+        elif choice=="5":
             print("Exiting...")
             break
         else:
