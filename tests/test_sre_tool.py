@@ -1,5 +1,4 @@
 import pytest
-import unittest.mock as mock
 import sys
 
 import sre_tool as tool
