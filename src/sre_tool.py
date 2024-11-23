@@ -48,9 +48,15 @@ def average_usage():
         if(service_name not in usage_data):
             usage_data[service_name]={"cpu": [], "memory": []}
         usage_data[service_name]['cpu'].append(cpu)
-        usage_data[service_name]['memory'].append(memory)    
+        usage_data[service_name]['memory'].append(memory)  
 
-    print(usage_data)    
+    for service,data in usage_data.items():
+        avg_cpu=sum(data["cpu"])/len(data["cpu"])
+        avg_memory=sum(data["memory"])/len(data["memory"])
+         print(f"Service={service:<15} CPU={data['cpu']:<10} Memory={data['memory']:<10}")   
+         
+
+    #print(usage_data)    
 
 
 def check_health():
