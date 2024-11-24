@@ -38,8 +38,7 @@ def test_check_health(capsys):
     assert ("healthy" in str(captured) or "Unhealthy" in str(captured))
 
 def test_track_service(capsys):
-    try:
-        
+    try:      
         tool.track_service('IdService')
         captured=capsys.readouterr()
     except KeyboardInterrupt:
